@@ -1,0 +1,36 @@
+schema: spec-driven
+
+context: |
+  Product: Ticket Management Admin Portal (technical assessment, built as the
+  foundation of a real production admin platform). Admins manage Events,
+  Ticket Categories and Tickets. There is no real backend: a mock REST API
+  (MSW) backed by an in-memory database with deterministic fixtures stands in
+  for it, and the UI must treat it exactly like a remote API.
+
+  Stack: Vue 3 (Composition API, <script setup>), TypeScript strict, Vite,
+  Vue Router, Pinia (client state only), TanStack Query for Vue (server state),
+  Zod (schemas), VeeValidate (forms), Reka UI (accessible headless primitives),
+  Tailwind CSS v4 with design tokens, MSW v2, Vitest + Vue Testing Library,
+  Playwright, ESLint + Prettier, pnpm, Docker (nginx runtime).
+
+  Structure: src/app (bootstrap, router, providers, layouts),
+  src/modules/<domain> (api, queries, components, pages, schemas per domain),
+  src/shared (api client, ui components, composables, utils, types),
+  src/mocks (MSW handlers, in-memory db, fixtures).
+
+  Conventions: all user-facing text and docs in English; money stored as
+  integer minor units; dates as ISO 8601 strings; no component touches
+  fixtures directly; prefer explicit code over speculative abstraction;
+  extract shared abstractions only after duplication is proven.
+
+rules:
+  proposal:
+    - Include a "Dependencies" section naming prerequisite changes.
+    - Include a "Non-goals" bullet list inside "What Changes" when scope could creep.
+  specs:
+    - Scenarios must be observable from the UI or the API contract, not internal implementation.
+  design:
+    - Include a "Validation plan" section listing the concrete checks that prove the change.
+  tasks:
+    - Each task group ends with a verification task.
+    - Never tick a task until its code and relevant tests exist and pass.
